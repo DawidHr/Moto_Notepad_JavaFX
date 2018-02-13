@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="85.0" minHeight="85.0" prefHeight="85.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Button fx:id="buttonProfile" mnemonicParsing="false" onAction="#movetoProfileScreen" prefHeight="274.0" prefWidth="184.0" styleClass="application.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <tooltip>
+            <Tooltip text="Profil" />
+         </tooltip></Button>
+      <Button fx:id="buttonCar" mnemonicParsing="false" onAction="#movetoVehicleScreen" prefHeight="193.0" prefWidth="140.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+         <tooltip>
+            <Tooltip text="Własne pojazdy" />
+         </tooltip></Button>
+      <Button fx:id="buttonCombustion" mnemonicParsing="false" onAction="#movetoFuelScreen" prefHeight="207.0" prefWidth="173.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+         <tooltip>
+            <Tooltip text="Informacje związane ze spalaniem pojazdów" />
+         </tooltip></Button>
+      <Button fx:id="buttonRepair" mnemonicParsing="false" onAction="#movetoRepairScreen" prefHeight="227.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <tooltip>
+            <Tooltip text="Notatki związane z Naprawami wykonanymi i do wykonania" />
+         </tooltip></Button>
+      <Button fx:id="buttonNote" mnemonicParsing="false" onAction="#movetoNoteScreen" prefHeight="223.0" prefWidth="183.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+         <tooltip>
+            <Tooltip text="Własne notatki" />
+         </tooltip></Button>
+      <Button fx:id="buttonLogeOff" mnemonicParsing="false" onAction="#logOff" prefHeight="243.0" prefWidth="232.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+         <tooltip>
+            <Tooltip text="Wyloguj z aplikacji" />
+         </tooltip></Button>
+   </children>
+</GridPane>

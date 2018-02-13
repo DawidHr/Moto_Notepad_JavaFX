@@ -1,0 +1,172 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+#body {
+	-fx-background-image: url("/img/desktop.png");
+	-fx-background-size: 700px;
+}
+
+#buttonProfile {
+-fx-background-image: url("/img/icons8-account-100.png");
+-fx-background-size: 80%;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+-fx-background-radius: 12px;
+-fx-border-color: lightblue;
+	-fx-border-radius: 12px;
+	-fx-border-width: 2px;
+}
+
+#buttonProfile:hover {
+    -fx-background-color:  rgb(23, 45, 193);
+}
+
+#buttonCar {
+	-fx-background-image: url("/img/icons8-tesla-model-s-100.png");
+	-fx-background-size: 89%;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-radius: 12px;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12px;
+	-fx-border-width: 2px;
+}
+#buttonCar:hover {
+    -fx-background-color:  rgb(23, 45, 193);
+}
+#buttonCombustion {
+	-fx-background-image: url("/img/icons8-stacja-benzynowa-100.png");
+		-fx-background-size: 70%;
+		-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12px;
+	-fx-border-width: 2px;
+}
+#buttonCombustion:hover {
+-fx-background-color:  rgb(23, 45, 193);
+}
+#buttonRepair {
+	-fx-background-image: url("/img/icons8-klucz-dynamometryczny-100.png");
+	-fx-background-size: 78%;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12px;
+	-fx-border-width: 2px;
+}
+#buttonRepair:hover {
+-fx-background-color:  rgb(23, 45, 193);
+}
+#buttonNote {
+	-fx-background-image: url("/img/icons8-literatura-100.png");
+	-fx-background-size: 70%;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12px;
+	-fx-border-width: 2px;
+}
+#buttonNote:hover {
+   -fx-background-color:  rgb(23, 45, 193);
+}
+#buttonLogeOff {
+	-fx-background-image: url("/img/icons8-shutdown-100.png");
+		-fx-background-size: 50%;
+		-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12px;
+	-fx-border-width: 2px;
+}
+
+#buttonLogeOff:hover {
+	    -fx-background-color:  rgb(23, 45, 193);
+	
+}
+
+
+
+
+
+
+
+
+
+/* Naprawa View */
+
+#buttonRepairDone {
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12%;
+	-fx-border-width: 2px;
+}
+#buttonRepairDone:hover {
+	    -fx-background-color:  rgb(23, 45, 193);
+	
+}
+
+#buttonRepairPlane {
+		-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12%;
+	-fx-border-width: 2px;
+}
+#buttonRepairPlane:hover {
+	    -fx-background-color:  rgb(23, 45, 193);
+	
+}
+
+/* Pojazdy View */
+
+#buttonVehicleBack {
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12%;
+	-fx-border-width: 2px;
+	
+}
+#buttonVehicleBack:hover {
+	     -fx-background-color:  rgb(23, 45, 193);
+	
+}
+
+#buttonVehicleView {
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12%;
+	-fx-border-width: 2px;
+}
+#buttonVehicleView:hover {
+	     -fx-background-color:  rgb(23, 45, 193);
+	
+}
+#buttonVehicleAdd {
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12%;
+	-fx-border-width: 2px;
+}
+#buttonVehicleAdd:hover {
+	     -fx-background-color:  rgb(23, 45, 193);
+	
+}
+#buttonVehicleShare {
+	-fx-background-position: center;
+	-fx-background-radius: 12%;
+	-fx-border-color: lightblue;
+	-fx-border-radius: 12%;
+	-fx-border-width: 2px;
+}
+#buttonVehicleShare:hover {
+	     -fx-background-color:  rgb(23, 45, 193);
+	
+}
