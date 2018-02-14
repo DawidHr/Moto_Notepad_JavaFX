@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.noteAddController">
+<GridPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.repairController2Add">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="600.0" prefWidth="600.0" />
   </columnConstraints>
@@ -25,17 +25,17 @@
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
          <children>
-            <Button layoutX="500.0" layoutY="30.0" maxHeight="40.0" maxWidth="75.0" minHeight="40.0" minWidth="75.0" mnemonicParsing="false" onAction="#saveNote" prefHeight="40.0" prefWidth="75.0" text="Dodaj">
+            <Button fx:id="addButton" layoutX="500.0" layoutY="30.0" maxHeight="40.0" maxWidth="75.0" minHeight="40.0" minWidth="75.0" mnemonicParsing="false" onAction="#saveNote" prefHeight="40.0" prefWidth="75.0" text="Dodaj">
                <tooltip>
                   <Tooltip text="Dodanie notatki do Bazy danych" />
                </tooltip>
             </Button>
-            <Button layoutX="25.0" layoutY="30.0" maxHeight="40.0" maxWidth="75.0" minHeight="40.0" minWidth="75.0" mnemonicParsing="false" onAction="#cencel" prefHeight="40.0" prefWidth="75.0" text="Wstecz">
+            <Button fx:id="cencelButton" layoutX="25.0" layoutY="30.0" maxHeight="40.0" maxWidth="75.0" minHeight="40.0" minWidth="75.0" mnemonicParsing="false" onAction="#cencel" prefHeight="40.0" prefWidth="75.0" text="Wstecz">
                <tooltip>
                   <Tooltip text="Powrót do strony głównej" />
                </tooltip>
             </Button>
-            <ComboBox layoutX="199.0" layoutY="38.0" prefWidth="150.0" promptText="Pojazd" />
+            <ComboBox fx:id="moto" layoutX="199.0" layoutY="38.0" prefWidth="150.0" promptText="Pojazd" />
          </children>
       </Pane>
       <Label text="Tytuł:">
@@ -46,20 +46,20 @@
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin></Label>
-      <ComboBox prefWidth="150.0" promptText="Ważność" GridPane.rowIndex="1">
+      <ComboBox fx:id="importantLvl" prefWidth="150.0" promptText="Ważność" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin></ComboBox>
-      <TextArea maxWidth="450.0" minWidth="450.0" prefHeight="200.0" prefWidth="450.0" GridPane.rowIndex="2">
+      <TextArea fx:id="note" maxWidth="450.0" minWidth="450.0" prefHeight="200.0" prefWidth="450.0" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="100.0" />
          </GridPane.margin></TextArea>
-      <TextField maxWidth="450.0" minWidth="450.0" prefWidth="450.0">
+      <TextField fx:id="title" maxWidth="450.0" minWidth="450.0" prefWidth="450.0">
          <GridPane.margin>
             <Insets left="100.0" />
          </GridPane.margin>
       </TextField>
-      <Button maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" prefWidth="100.0" text="Dodaj Pliki" GridPane.rowIndex="1">
+      <Button fx:id="addImageNote" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#getImage" prefWidth="100.0" text="Dodaj Pliki" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="450.0" />
          </GridPane.margin>

@@ -69,7 +69,7 @@ public class repairController2Add implements Initializable{
 	}
 	
 	
-	public void save() {
+	public void saveNote() {
 		
 	}
 	
