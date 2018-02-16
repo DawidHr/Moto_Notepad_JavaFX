@@ -27,6 +27,8 @@ public class noteViewController implements Initializable{
 	
 	DataBase db;
 	
+	
+	
 	public void setId(int id) {
 		// TODO Auto-generated method stub
 		this.id=id;
@@ -63,7 +65,7 @@ public class noteViewController implements Initializable{
 		moveTo();
 	}
 	
-	public void editNote() {	
+	public void editNote() {
 		db.updateNote(id, title.getText(), data, note.getText());
 		moveTo();
 	}

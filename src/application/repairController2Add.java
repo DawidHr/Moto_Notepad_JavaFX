@@ -43,6 +43,8 @@ public class repairController2Add implements Initializable{
 	@FXML
 	Button addImageNote;
 	
+	int id_user;
+	int repairMode;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -78,11 +80,11 @@ public class repairController2Add implements Initializable{
 			Stage primaryStage = (Stage) cencelButton.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader();
 			Parent root1 = loader.load(getClass().getResource("repairViewAdd2.fxml").openStream());
-			repairController2 repairController2C = (repairController2) loader.getController();
+			repairController2Add2 repairController2Add2 = (repairController2Add2) loader.getController();
 			//Ustawianie id u¿ytkownika
 			
-			repairController2C.setId(1);
-			repairController2C.setRepairMode(1);
+			repairController2Add2.setId(id_user);
+			repairController2Add2.setRepairMode(repairMode);
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -93,10 +95,10 @@ public class repairController2Add implements Initializable{
 	}
 	public void setRepairMode(int i) {
 		// TODO Auto-generated method stub
-		
+		repairMode=i;
 	}
 	public void setId(int i) {
 		// TODO Auto-generated method stub
-		
+		id_user=i;
 	}
 }

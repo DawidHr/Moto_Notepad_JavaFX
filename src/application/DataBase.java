@@ -183,14 +183,30 @@ public void updateNote(int id, String text, DatePicker data2, String note1) {
 	// TODO Auto-generated method stub
 	String query = "update Note set title=?, data_note=?, text_note=? where id=?";
 	try {
-		PreparedStatement pr = conn.prepareStatement(query);
-		pr.setString(1, text);
-		LocalDate data1 = data2.getValue();
-		Date data3 = Date.valueOf(data1);
-		pr.setDate(2, data3);
-		pr.setString(3, note1);
-		pr.setInt(4, id);
-		pr.executeUpdate();
+		Note note11 = null;
+		String query1 = "select * from Note where id=?";
+		PreparedStatement stat1 = conn.prepareStatement(query1);
+		stat1.setInt(1, id);
+		ResultSet rs = stat1.executeQuery();
+		while(rs.next()) {
+			note11 = new Note(rs.getInt("id"), rs.getInt("id_user"), rs.getString("title"), rs.getDate("data_note"), rs.getString("text_note"));
+			
+		}
+		if(!(note11.equals(text))) {
+			//Update
+			String query2 = "update Note set title=? where id=?";
+			PreparedStatement stat2 = conn.prepareStatement(query2);
+			stat2.setString(1, text);
+			stat2.setInt(2, id);
+			stat2.executeUpdate();
+		}
+		if(!(note11.getNote().equals(note1))) {
+			String query3 = "update Note set text_note=? where id=?";
+			PreparedStatement stat3 = conn.prepareStatement(query3);
+			stat3.setString(1, note1);
+			stat3.setInt(2, id);
+			stat3.executeUpdate();
+		}
 	}
 	catch(Exception e) {
 		e.printStackTrace();

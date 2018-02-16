@@ -1,7 +1,9 @@
 package application;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -23,7 +25,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class repairController2Add2 implements Initializable{
@@ -36,9 +40,10 @@ public class repairController2Add2 implements Initializable{
 	Button buttonCencel;
 	@FXML
 	Button buttonSave;
-	@FXML
-	TextArea areaImageText;
 	
+	int id_user;
+	int repairMode;
+	List<File> listFiles = new LinkedList<>();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -66,13 +71,29 @@ public class repairController2Add2 implements Initializable{
 	
 	
 	public void save() {
-		
+		if(!(listFiles.isEmpty())) {
+			for(File e: listFiles) {
+				System.out.println(e.getName());
+			}
+		}
 	}
 	
 	public void getImage() {
-		
+		FileChooser fileCh = new FileChooser();
+		File selectedFile = fileCh.showOpenDialog(null); 
+		if( selectedFile != null) {
+			listFiles.add(selectedFile);
+		}
 	}
 	public void deleteImage() {
 		
+	}
+	public void setId(int i) {
+		// TODO Auto-generated method stub
+		id_user=i;
+	}
+	public void setRepairMode(int i) {
+		// TODO Auto-generated method stub
+		repairMode=i;
 	}
 }

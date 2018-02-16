@@ -62,7 +62,19 @@ public class noteController implements Initializable{
 		table_date.setCellValueFactory(new PropertyValueFactory<Note, Date>("date"));
 	}
 	public void movetoProfileScreen() {
-		
+		try {
+			Stage primaryStage = (Stage) buttonNoteAdd.getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader();
+			Parent root1 = loader.load(getClass().getResource("mainView.fxml").openStream());
+			mainController mainControllerc = (mainController) loader.getController();
+			mainControllerc.setID(id);
+			Scene scene = new Scene(root1);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	public void movetoViewNote() {
 		if(table.getSelectionModel().getSelectedItem() != null) {
