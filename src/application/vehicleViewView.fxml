@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.vehicleControllerView">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="600.0" prefWidth="600.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <TextField fx:id="textFieldMarka" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" promptText="Marka">
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="textFieldModel" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" promptText="Model">
+         <GridPane.margin>
+            <Insets left="350.0" />
+         </GridPane.margin>
+      </TextField>
+      <Label text="Data Badań technicznych:" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="100.0" />
+         </GridPane.margin>
+      </Label>
+      <DatePicker fx:id="data_technical" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="250.0" />
+         </GridPane.margin>
+      </DatePicker>
+      <Button fx:id="buttonUpdate" maxHeight="50.0" maxWidth="75.0" minHeight="50.0" minWidth="75.0" mnemonicParsing="false" onAction="#updateVehicle" prefHeight="50.0" prefWidth="75.0" text="Edytuj" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="475.0" />
+         </GridPane.margin>
+      </Button>
+      <Button fx:id="buttonCencel" maxHeight="50.0" maxWidth="75.0" minHeight="50.0" minWidth="75.0" mnemonicParsing="false" onAction="#cencel" prefHeight="50.0" prefWidth="75.0" text="Wstecz" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin>
+      </Button>
+      <ComboBox fx:id="comboBoxType" minWidth="0.0" prefWidth="150.0" promptText="Typ" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="350.0" />
+         </GridPane.margin>
+      </ComboBox>
+      <TextField fx:id="textFieldSize" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" promptText="Pojemność" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="50.0" />
+         </GridPane.margin>
+      </TextField>
+      <Label text="Data OC:" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="180.0" />
+         </GridPane.margin>
+      </Label>
+      <DatePicker fx:id="datd_oc" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="250.0" />
+         </GridPane.margin>
+      </DatePicker>
+      <Button fx:id="buttonDelete" maxHeight="50.0" maxWidth="75.0" minHeight="50.0" minWidth="75.0" mnemonicParsing="false" onAction="#delete" prefHeight="50.0" prefWidth="75.0" text="Kasuj" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="263.0" />
+         </GridPane.margin>
+      </Button>
+   </children>
+</GridPane>

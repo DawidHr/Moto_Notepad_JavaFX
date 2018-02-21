@@ -28,11 +28,12 @@ public class mainController implements Initializable {
 	@FXML
 	Button buttonLogeOff;
 
+	DataBase db;
 	int id;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+	db = new DataBase();
 	}
 
 	public void setID(int id) {
@@ -54,6 +55,7 @@ public class mainController implements Initializable {
 			 * 
 			 * Stage stage1 = (Stage) buttonRepair.getScene().getWindow(); stage1.close();
 			 */
+			closeDB();
 			Stage primaryStage = (Stage) buttonCar.getScene().getWindow();
 			Parent root1 = FXMLLoader.load(getClass().getResource("vehiclesView.fxml"));
 			Scene scene = new Scene(root1);
@@ -68,18 +70,34 @@ public class mainController implements Initializable {
 	// Spalanie
 	public void movetoFuelScreen() {
 		System.out.println("Za chwile sprawdzimy Spalanie");
+		try {
+			db.close();
+			Stage primaryStage = (Stage) buttonNote.getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader();
+			Parent root1 = loader.load(getClass().getResource("fuelView.fxml").openStream());
+			fuelController fuelControllerc = (fuelController) loader.getController();
+			fuelControllerc.setId(id);
+			Scene scene = new Scene(root1);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	// Naprawy
 	public void movetoRepairScreen() {
 		System.out.println("Zachwile przejdziemy do Napraw");
-
+/*
 		try {
-			/*
+			
 			 * Zamykanie sceny
 			 * 
 			 * Stage stage1 = (Stage) buttonRepair.getScene().getWindow(); stage1.close();
-			 */
+			 
+			closeDB();
 			Stage primaryStage = (Stage) buttonRepair.getScene().getWindow();
 			Parent root1 = FXMLLoader.load(getClass().getResource("repairView.fxml"));
 			Scene scene = new Scene(root1);
@@ -88,7 +106,7 @@ public class mainController implements Initializable {
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	// Notatki
@@ -101,6 +119,7 @@ public class mainController implements Initializable {
 			 * 
 			 * Stage stage1 = (Stage) buttonRepair.getScene().getWindow(); stage1.close();
 			 */
+			closeDB();
 			Stage primaryStage = (Stage) buttonNote.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader();
 			Parent root1 = loader.load(getClass().getResource("noteView.fxml").openStream());
@@ -119,6 +138,7 @@ public class mainController implements Initializable {
 	public void logOff() {
 		System.out.println("W³aœnie siê wylogowa³eœ");
 		try {
+			closeDB();
 			Stage primaryStage = (Stage) buttonNote.getScene().getWindow();
 			Parent root1 = FXMLLoader.load(getClass().getResource("mainLoginView.fxml"));
 			Scene scene = new Scene(root1);
@@ -128,6 +148,10 @@ public class mainController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void closeDB() {
+		db.close();
 	}
 
 }

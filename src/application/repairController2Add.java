@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Date;
 import java.util.List;
@@ -43,13 +44,16 @@ public class repairController2Add implements Initializable{
 	@FXML
 	Button addImageNote;
 	
+	
+	List<File> listFiles;
 	int id_user;
 	int repairMode;
+	DataBase db;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		
+		db = new DataBase();
 	}
 	public void cencel() {
 		try {
@@ -72,7 +76,12 @@ public class repairController2Add implements Initializable{
 	
 	
 	public void saveNote() {
+		if(!(listFiles.isEmpty())) {
+			db.saveFiles(listFiles);
+		}
 		
+	//	db.saveNote()
+		//db.close();
 	}
 	
 	public void getImage() {
@@ -100,5 +109,12 @@ public class repairController2Add implements Initializable{
 	public void setId(int i) {
 		// TODO Auto-generated method stub
 		id_user=i;
+	}
+	public void setFiles(List<File> listFiles) {
+		// TODO Auto-generated method stub
+		this.listFiles = listFiles;
+		for(File e: this.listFiles) {
+			System.out.println(e.getName());
+		}
 	}
 }

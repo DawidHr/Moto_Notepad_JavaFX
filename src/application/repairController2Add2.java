@@ -3,6 +3,7 @@ package application;
 import java.io.File;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -18,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -40,6 +42,8 @@ public class repairController2Add2 implements Initializable{
 	Button buttonCencel;
 	@FXML
 	Button buttonSave;
+	@FXML
+	ListView filesListView;
 	
 	int id_user;
 	int repairMode;
@@ -71,22 +75,41 @@ public class repairController2Add2 implements Initializable{
 	
 	
 	public void save() {
-		if(!(listFiles.isEmpty())) {
-			for(File e: listFiles) {
-				System.out.println(e.getName());
-			}
+		try {
+			Stage primaryStage = (Stage) buttonCencel.getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader();
+			Parent root1 = loader.load(getClass().getResource("repairViewAdd.fxml").openStream());
+			repairController2Add repairController2AddC = (repairController2Add) loader.getController();
+			//Ustawianie id u¿ytkownika
+			
+			repairController2AddC.setId(1);
+			repairController2AddC.setRepairMode(1);
+			repairController2AddC.setFiles(listFiles);
+			Scene scene = new Scene(root1);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
 	public void getImage() {
 		FileChooser fileCh = new FileChooser();
+		
+		//fileCh.getExtensionFilters().addAll()
 		File selectedFile = fileCh.showOpenDialog(null); 
 		if( selectedFile != null) {
+			filesListView.getItems().add(selectedFile.getName());
 			listFiles.add(selectedFile);
 		}
 	}
 	public void deleteImage() {
-		
+		System.out.println("Witaj jestem w kasacji");
+		listFiles.clear();
+		//filesListView.getItems().removeAll();
+		filesListView.getItems().clear();
+		System.out.println("listfiles ="+listFiles.size());
 	}
 	public void setId(int i) {
 		// TODO Auto-generated method stub
