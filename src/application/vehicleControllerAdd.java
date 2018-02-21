@@ -96,6 +96,7 @@ return;
 		Date dataOC = Date.valueOf(localDataOc);
 		LocalDate localDatetechnical = data_technical.getValue();
 		Date dataTechnical = Date.valueOf(localDatetechnical);
+		System.out.println("Id u¿ytkownika:"+id);
 		db.addVehicle(id, textFieldMarka.getText().trim(), textFieldModel.getText().trim(), floatNumber, comboBoxType.getSelectionModel().getSelectedItem(), dataOC, dataTechnical);
 		cencel();
 		}

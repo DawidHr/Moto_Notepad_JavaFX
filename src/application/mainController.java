@@ -55,9 +55,12 @@ public class mainController implements Initializable {
 			 * 
 			 * Stage stage1 = (Stage) buttonRepair.getScene().getWindow(); stage1.close();
 			 */
-			closeDB();
+			db.close();
 			Stage primaryStage = (Stage) buttonCar.getScene().getWindow();
-			Parent root1 = FXMLLoader.load(getClass().getResource("vehiclesView.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			Parent root1 = loader.load(getClass().getResource("vehiclesView.fxml").openStream());
+			vehicleController vehicleControllerc = (vehicleController) loader.getController();
+			vehicleControllerc.setId(id);
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -77,6 +80,7 @@ public class mainController implements Initializable {
 			Parent root1 = loader.load(getClass().getResource("fuelView.fxml").openStream());
 			fuelController fuelControllerc = (fuelController) loader.getController();
 			fuelControllerc.setId(id);
+			fuelControllerc.main();
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

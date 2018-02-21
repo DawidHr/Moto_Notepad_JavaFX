@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.repairController2Add">
+<GridPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.fuelControllerAdd">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="600.0" prefWidth="600.0" />
   </columnConstraints>
@@ -22,12 +22,12 @@
       <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ComboBox prefWidth="150.0" promptText="Pojazd">
+      <ComboBox fx:id="comboBoxMoto" prefWidth="150.0" promptText="Pojazd">
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin>
       </ComboBox>
-      <ComboBox prefWidth="150.0" promptText="Rodzaj paliwa">
+      <ComboBox fx:id="comboBoxFuel" prefWidth="150.0" promptText="Rodzaj paliwa">
          <GridPane.margin>
             <Insets left="375.0" />
          </GridPane.margin>
@@ -37,7 +37,7 @@
             <Insets left="50.0" />
          </GridPane.margin>
       </Label>
-      <TextField maxWidth="275.0" minWidth="275.0" prefWidth="275.0" GridPane.rowIndex="1">
+      <TextField fx:id="textFieldSize" maxWidth="275.0" minWidth="275.0" prefWidth="275.0" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="150.0" />
          </GridPane.margin>
@@ -47,7 +47,7 @@
             <Insets left="50.0" />
          </GridPane.margin>
       </Label>
-      <TextField maxWidth="275.0" minWidth="275.0" prefWidth="275.0" GridPane.rowIndex="2">
+      <TextField fx:id="textFieldPrize" maxWidth="275.0" minWidth="275.0" prefWidth="275.0" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="150.0" />
          </GridPane.margin>
@@ -57,17 +57,17 @@
             <Insets left="50.0" />
          </GridPane.margin>
       </Label>
-      <DatePicker GridPane.rowIndex="3">
+      <DatePicker fx:id="date1" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="150.0" />
          </GridPane.margin>
       </DatePicker>
-      <Button maxHeight="50.0" maxWidth="75.0" minHeight="50.0" minWidth="75.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="Dodaj" GridPane.rowIndex="4">
+      <Button fx:id="buttonAdd" maxHeight="50.0" maxWidth="75.0" minHeight="50.0" minWidth="75.0" mnemonicParsing="false" onAction="#addFuel" prefHeight="50.0" prefWidth="75.0" text="Dodaj" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets left="475.0" />
          </GridPane.margin>
       </Button>
-      <Button maxHeight="50.0" maxWidth="75.0" minHeight="50.0" minWidth="75.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="75.0" text="Wstecz" GridPane.rowIndex="4">
+      <Button fx:id="buttonCencel" maxHeight="50.0" maxWidth="75.0" minHeight="50.0" minWidth="75.0" mnemonicParsing="false" onAction="#cencel" prefHeight="50.0" prefWidth="75.0" text="Wstecz" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin>

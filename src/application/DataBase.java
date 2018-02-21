@@ -255,9 +255,32 @@ public class DataBase {
 		}
 	}
 
+	// Sprawdzamy czy u¿ytkownik o id posiada jakies pojazdy
 	public boolean findIfIsMoto(int id) {
-		// String query = "select "
-
+		System.out.println("ID u¿ytkownika"+id);
+		try {
+			String query1 = "select * from Moto";
+			Statement st = conn.createStatement();
+			ResultSet rs1 = st.executeQuery(query1);
+			while(rs1.next()) {
+				System.out.println(rs1.getString("id")+" "+rs1.getInt("id_user") + " "+rs1.getString("marka"));
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			String query = "select * from Moto where id_user=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while (rs.next()) {
+				System.out.println("Return findIfIsMoto true");
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -388,5 +411,57 @@ public class DataBase {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void addNewFuel(int id, String string, String string2, Float fsize, Float fprize, Date data2) {
+		try {
+			String query = "insert into Fuel(id_user, moto, fuel, howMuch, howMuchPrize, Date) values(?, ?, ?, ?, ?, ?)";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			prs.setString(2, string);
+			prs.setString(3, string2);
+			prs.setFloat(4, fsize);
+			prs.setFloat(5, fprize);
+			prs.setDate(6, data2);
+			prs.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<Fuel> getFule(int id) {
+		List<Fuel> list = new LinkedList<>();
+		try {
+			String query = "select * from Fuel where id_user=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				list.add(new Fuel(rs.getInt("id"), rs.getString("moto"), rs.getString("fuel"), rs.getFloat("howMuch"), rs.getFloat("howMuchPrize"), rs.getDate("Date")));
+			System.out.println("====================="
+				+"\n"+rs.getString("moto"));
+			
+			}
+			return list;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void deleteFuel(int id) {
+		// TODO Auto-generated method stub
+		try {
+			String query = "delete from Fuel where id=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			prs.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
