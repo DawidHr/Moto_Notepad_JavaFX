@@ -44,6 +44,26 @@ public class mainController implements Initializable {
 	// Profil
 	public void movetoProfileScreen() {
 		System.out.println("Za chwile przejdziemy do Profilu");
+		try {
+			/*
+			 * Zamykanie sceny
+			 * 
+			 * Stage stage1 = (Stage) buttonRepair.getScene().getWindow(); stage1.close();
+			 */
+			db.close();
+			Stage primaryStage = (Stage) buttonCar.getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader();
+			Parent root1 = loader.load(getClass().getResource("profileView.fxml").openStream());
+			profileController profileControllerc = (profileController) loader.getController();
+			profileControllerc.setId(id);
+			profileControllerc.setProfileName();
+			Scene scene = new Scene(root1);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	// Pojazdy

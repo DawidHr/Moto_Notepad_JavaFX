@@ -464,4 +464,54 @@ public class DataBase {
 			e.printStackTrace();
 		}
 	}
+
+	public String getProfileName(int id) {
+		try {
+			String query = "select user_name from User where id=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				return rs.getString("user_name");
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void updateProfile(int id, String pass, String mail1) {
+		try {
+			String password="";
+			String mail="";
+			String query = "select * from User where id=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				password = rs.getString("user_password");
+				mail=rs.getString("user_mail");
+			}
+			if(!(password.equals(pass) || password=="")) {
+			String query1 = "update User set user_password=? where id = ?";
+			PreparedStatement prs1 = conn.prepareStatement(query1);
+			prs1.setString(1, pass);
+			prs1.setInt(2, id);
+			prs1.executeUpdate();
+			}
+			if(!(mail.equals(mail1) || mail=="")) {
+				String query2 = "update User set user_mail=? where id = ?";
+				PreparedStatement prs2 = conn.prepareStatement(query2);
+				prs2.setString(1, mail1);
+				prs2.setInt(2, id);
+				prs2.executeUpdate();
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

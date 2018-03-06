@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegisterController">
+<GridPane fx:id="body" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.profileEditController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
@@ -26,7 +26,7 @@
       <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <PasswordField fx:id="userPassword" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="Hasło" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <PasswordField fx:id="password1" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="Hasło" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin>
@@ -34,12 +34,12 @@
             <Tooltip text="Haslo używane podczas logowania do aplikacji" />
          </tooltip>
       </PasswordField>
-      <Button maxWidth="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#saveUser" prefWidth="200.0" text="Utwórz" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Button fx:id="saveButton" maxWidth="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#changUserInfo" prefWidth="200.0" text="Edytuj" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets left="100.0" />
          </GridPane.margin>
       </Button>
-      <Label text="REJESTRACJA" GridPane.columnIndex="1">
+      <Label text="Dane Użytkownika" GridPane.columnIndex="1">
          <GridPane.margin>
             <Insets left="120.0" />
          </GridPane.margin>
@@ -47,7 +47,7 @@
             <Font name="Cambria Bold" size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="userName" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="Nazwa Użytkownika" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextField fx:id="profileName" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="Nazwa Użytkownika" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin>
@@ -55,15 +55,15 @@
             <Tooltip text="Nazwa użytkownika" />
          </tooltip>
       </TextField>
-      <TextField fx:id="userMail" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="Podpowiedz wyświetlana w razie zapomienia hasła" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <TextField fx:id="mail" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="Podpowiedz wyświetlana w razie zapomienia hasła" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin>
          <tooltip>
-            <Tooltip text="Podpowiedz wyświetlana w razie zapomienia hasła" />
+            <Tooltip text="Mail Użytkownika - Zostanie on wykorzystany do przypomnienia hasla jeśli zostanie ono zapomniane" />
          </tooltip>
       </TextField>
-      <Button maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefWidth="80.0" text="Logowanie" GridPane.rowIndex="5">
+      <Button fx:id="cencelButton" maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" onAction="#cencel" prefWidth="80.0" text="Anuluj" GridPane.rowIndex="5">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
