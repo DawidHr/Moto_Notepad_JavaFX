@@ -2,6 +2,7 @@ package application;
 
 import java.net.URL;
 import java.sql.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -35,11 +36,34 @@ public class repairController2 implements Initializable{
 	int id_user;
 	//Czy do naprawy czy naprawione
 	int repairMode;
+	DataBase db;
+	
+	@FXML
+	TableView<RepairNotes> table;
+	@FXML
+	TableColumn<RepairNotes, String> title;
+	@FXML
+	TableColumn<RepairNotes, Date> date2;
+	@FXML
+	TableColumn<RepairNotes, String> lvl;
+	List<RepairNotes> list = new LinkedList<>();
+	ObservableList<RepairNotes> observableList1 = FXCollections.observableArrayList();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+		db = new DataBase();
+		list = db.getRepairList(id_user);
 		
+		if(!list.isEmpty())
+		{for(RepairNotes c: list) {
+			System.out.println(c.toString());
+		}}
+		observableList1.addAll(list);
+		table.setItems(observableList1);
+		title.setCellValueFactory(new PropertyValueFactory<RepairNotes, String>("title"));
+		date2.setCellValueFactory(new PropertyValueFactory<RepairNotes, Date>("data_note"));
+		lvl.setCellValueFactory(new PropertyValueFactory<RepairNotes, String>("importatntLvl"));
 	}
 
 

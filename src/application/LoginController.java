@@ -42,6 +42,9 @@ public class LoginController implements Initializable{
 	
 	
 	public void loginToApp() {
+		if(db.isClose()) {
+			db = new DataBase();
+		}
 		System.out.println(userName.getSelectionModel().getSelectedItem());
 		int id = db.Login(userName.getSelectionModel().getSelectedItem(), userPassword.getText());
 		if(id==0) {
@@ -66,6 +69,9 @@ public class LoginController implements Initializable{
 		}
 	}
 	public void registerNewUser() {
+		if(db.isClose()) {
+			db = new DataBase();
+		}
 		try {
 			db.close();
 			Stage primaryStage = (Stage) userName.getScene().getWindow();
@@ -80,7 +86,33 @@ public class LoginController implements Initializable{
 		}
 	}
 	public void sendPasswordToMail() {
-		
+		if(db.isClose()) {
+			db = new DataBase();
+		}
+		System.out.println("Jestem w przypomnieniu hasla");
+		int id = db.Login(userName.getSelectionModel().getSelectedItem());
+		if(id==0) {
+			System.out.println("id="+id);
+		}
+		else {
+			System.out.println("Jestem w else");
+			System.out.println("id="+id);
+		try {
+			db.close();
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader();
+			Parent root1 = loader.load(getClass().getResource("mainLoginView2.fxml").openStream());
+			mainController2 mainController2c = (mainController2) loader.getController();
+			mainController2c.setId(id);
+			mainController2c.main();
+			Scene scene = new Scene(root1);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}}
 	}
 
 

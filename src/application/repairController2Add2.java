@@ -2,6 +2,7 @@ package application;
 
 import java.io.File;
 import java.net.URL;
+import java.security.cert.Extension;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -30,10 +31,14 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class repairController2Add2 implements Initializable{
 
+	//
+	public String title, note, moto, importantlvl;
+	
 	@FXML
 	Button buttonAddFile;
 	@FXML
@@ -47,12 +52,12 @@ public class repairController2Add2 implements Initializable{
 	
 	int id_user;
 	int repairMode;
-	List<File> listFiles = new LinkedList<>();
-	
+//	List<File> listFiles = new LinkedList<>();
+	List<File> listFiles;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		
+		listFiles = new LinkedList<>();
 	}
 	public void cencel() {
 		try {
@@ -85,6 +90,7 @@ public class repairController2Add2 implements Initializable{
 			repairController2AddC.setId(1);
 			repairController2AddC.setRepairMode(1);
 			repairController2AddC.setFiles(listFiles);
+			repairController2AddC.setNotes(title, note, moto, importantlvl);
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -96,8 +102,8 @@ public class repairController2Add2 implements Initializable{
 	
 	public void getImage() {
 		FileChooser fileCh = new FileChooser();
-		
-		//fileCh.getExtensionFilters().addAll()
+		ExtensionFilter filter = new ExtensionFilter("Obrazy","*.jpg", "*.jpeg", "*.gif", "*.bmp", "*.pdf");
+		fileCh.getExtensionFilters().addAll(filter);
 		File selectedFile = fileCh.showOpenDialog(null); 
 		if( selectedFile != null) {
 			filesListView.getItems().add(selectedFile.getName());
@@ -118,5 +124,20 @@ public class repairController2Add2 implements Initializable{
 	public void setRepairMode(int i) {
 		// TODO Auto-generated method stub
 		repairMode=i;
+	}
+	public void setList(List<File> listFiles2) {
+		// TODO Auto-generated method stub
+		listFiles.addAll(listFiles2);
+		if(!(listFiles2.isEmpty())) {
+			for(int i=0; i<listFiles2.size();i++)
+			filesListView.getItems().add(listFiles2.get(i).getName());
+		}
+	}
+	public void setNotes(String text, String text2, String selectedItem, String selectedItem2) {
+		// TODO Auto-generated method stub
+		title=text;
+		note=text2;
+		moto=selectedItem;
+		importantlvl=selectedItem2;
 	}
 }

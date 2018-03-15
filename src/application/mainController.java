@@ -1,6 +1,7 @@
 package application;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -114,23 +115,28 @@ public class mainController implements Initializable {
 	// Naprawy
 	public void movetoRepairScreen() {
 		System.out.println("Zachwile przejdziemy do Napraw");
-/*
+
 		try {
-			
-			 * Zamykanie sceny
+			List<Vehicle> list = db.getVehicles(id);
+			closeDB();
+			if(list.isEmpty()) {
+				movetoVehicleScreen();
+			}
+			/* * Zamykanie sceny
 			 * 
 			 * Stage stage1 = (Stage) buttonRepair.getScene().getWindow(); stage1.close();
-			 
-			closeDB();
+			 */
+			else {
 			Stage primaryStage = (Stage) buttonRepair.getScene().getWindow();
 			Parent root1 = FXMLLoader.load(getClass().getResource("repairView.fxml"));
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
-			primaryStage.show();
+			primaryStage.show(); 
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 	// Notatki

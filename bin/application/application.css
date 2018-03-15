@@ -5,6 +5,15 @@
 	-fx-background-size: 700px;
 }
 
+#LoginImage {
+	-fx-image: url("/img/indeks.jpg"); 
+	-fx-alignment: center;
+	-fx-border-color: cyan;
+	-fx-border-width: 100;
+	-fx-border-image-width: 200;
+
+}
+
 #buttonProfile {
 -fx-background-image: url("/img/icons8-account-100.png");
 -fx-background-size: 80%;

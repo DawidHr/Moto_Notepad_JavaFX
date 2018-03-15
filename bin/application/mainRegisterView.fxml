@@ -55,12 +55,12 @@
             <Tooltip text="Nazwa użytkownika" />
          </tooltip>
       </TextField>
-      <TextField fx:id="userMail" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="Adres mail" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <TextField fx:id="userMail" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" promptText="Podpowiedz wyświetlana w razie zapomienia hasła" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="50.0" />
          </GridPane.margin>
          <tooltip>
-            <Tooltip text="Mail Użytkownika - Zostanie on wykorzystany do przypomnienia hasla jeśli zostanie ono zapomniane" />
+            <Tooltip text="Podpowiedz wyświetlana w razie zapomienia hasła" />
          </tooltip>
       </TextField>
       <Button maxWidth="80.0" minWidth="80.0" mnemonicParsing="false" prefWidth="80.0" text="Logowanie" GridPane.rowIndex="5">

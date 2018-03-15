@@ -41,11 +41,11 @@
                </GridPane.margin></Button>
          </children>
       </GridPane>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="348.0" text="Tytuł" />
-          <TableColumn prefWidth="134.0" text="Data dodania" />
-            <TableColumn prefWidth="117.0" text="Ważność" />
+          <TableColumn fx:id="title" prefWidth="348.0" text="Tytuł" />
+          <TableColumn fx:id="date2" prefWidth="134.0" text="Data dodania" />
+            <TableColumn fx:id="lvl" prefWidth="117.0" text="Ważność" />
         </columns>
       </TableView>
    </children>

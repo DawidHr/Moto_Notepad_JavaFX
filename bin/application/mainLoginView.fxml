@@ -41,9 +41,9 @@
             <Tooltip text="Wybierz swoją nazwe użytkonika" />
          </tooltip>
       </ComboBox>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+      <ImageView fx:id="LoginImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
          <GridPane.margin>
-            <Insets left="100.0" />
+            <Insets left="150.0" />
          </GridPane.margin>
       </ImageView>
       <Button maxWidth="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#loginToApp" prefWidth="200.0" text="Zaloguj" GridPane.columnIndex="1" GridPane.rowIndex="3">

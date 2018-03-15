@@ -3,6 +3,7 @@ package application;
 import java.io.File;
 import java.net.URL;
 import java.sql.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -45,15 +46,29 @@ public class repairController2Add implements Initializable{
 	Button addImageNote;
 	
 	
-	List<File> listFiles;
+	List<File> listFiles = new LinkedList<>();
 	int id_user;
 	int repairMode;
 	DataBase db;
+	
+	ObservableList<String> observableList1 = FXCollections.observableArrayList();
+	List<Vehicle> list = new LinkedList<>();
+	ObservableList<String> observableList2 = FXCollections.observableArrayList();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		db = new DataBase();
+		observableList1.add("Bardzo wa¿ne");
+		observableList1.add("Wa¿ne");
+		observableList1.add("Zwyk³e");
+		observableList1.add("Ma³o wa¿ne");
+		importantLvl.setItems(observableList1);
+		list = db.getVehicles(id_user);
+		for(Vehicle c: list) {
+			observableList2.add(c.getMarka()+" "+c.getModel());
+		}
+		moto.setItems(observableList2);
 	}
 	public void cencel() {
 		try {
@@ -76,12 +91,13 @@ public class repairController2Add implements Initializable{
 	
 	
 	public void saveNote() {
-		if(!(listFiles.isEmpty())) {
-			db.saveFiles(listFiles);
-		}
-		
-	//	db.saveNote()
-		//db.close();
+		System.out.println("Jestem w saveNote()");
+	if(moto.getSelectionModel().getSelectedItem() == null) {
+		return;
+	}
+	String repairMode1 = (repairMode==1) ? "Wykonane" : "Do zrobienia";
+		db.saveRepairNote(id_user, repairMode1, moto.getSelectionModel().getSelectedItem(), title.getText(), note.getText(), importantLvl.getSelectionModel().getSelectedItem(), listFiles);
+		cencel();
 	}
 	
 	public void getImage() {
@@ -93,7 +109,9 @@ public class repairController2Add implements Initializable{
 			//Ustawianie id u¿ytkownika
 			
 			repairController2Add2.setId(id_user);
+			repairController2Add2.setList(listFiles);
 			repairController2Add2.setRepairMode(repairMode);
+			repairController2Add2.setNotes(title.getText(), note.getText(), moto.getSelectionModel().getSelectedItem(), importantLvl.getSelectionModel().getSelectedItem());
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -116,5 +134,12 @@ public class repairController2Add implements Initializable{
 		for(File e: this.listFiles) {
 			System.out.println(e.getName());
 		}
+	}
+	public void setNotes(String title2, String note2, String moto2, String importantlvl2) {
+		// TODO Auto-generated method stub
+		title.setText(title2);
+		note.setText(note2);
+		moto.getSelectionModel().select(moto2);
+		importantLvl.getSelectionModel().select(importantlvl2);
 	}
 }

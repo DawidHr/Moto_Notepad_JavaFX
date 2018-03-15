@@ -1,7 +1,12 @@
 package application;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.ReadOnlyFileSystemException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -11,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -218,29 +224,53 @@ public class DataBase {
 		}
 	}
 
-	public void saveFiles(List<File> listFiles) {
-		// TODO Auto-generated method stub
+	public void saveRepairNote(int id_user, String id_mod, String moto,  String title, String note,  String importantLvl, List<File> listFiles) {
+		System.out.println("saveRepairNote()");
 		try {
+			int id_group =0;
+			if(!(listFiles.isEmpty())) {
+			id_group = saveFiles(listFiles);
+			}
+			String query = "insert into Repair_Note(id_user, id_mod, title, data_note, importatntLvl, id_group_files, note, moto)  values(?, ?, ?, ?, ?, ?, ?, ?)";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id_user);
+			prs.setString(2, id_mod);
+			prs.setString(3, title);
+			LocalDate date1  = LocalDate.now();
+			Date date2 = Date.valueOf(date1); 
+			prs.setDate(4, date2);
+			prs.setString(5, importantLvl);
+			prs.setInt(6, id_group);
+			prs.setString(7, note);
+			prs.setString(8, moto);
+			prs.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public int saveFiles(List<File> listFiles) {
+		try {
+			//Znalezienie ostatniej numeru grupy plików
 			int id_group = 0;
-			String query = "Select id_grupy from Pliki";
-			Statement stat1 = conn.createStatement();
-			ResultSet rs = stat1.executeQuery(query);
-			while (rs.next()) {
+			String query1 = "select * from Pliki";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(query1);
+			while(rs.next()) {
 				id_group = rs.getInt("id_grupy");
 			}
+			//wybranie nastepnego numeru grupy plików
 			id_group = id_group + 1;
+			//Zapisanie plików do bazy danych
 			for (int i = 1; i <= listFiles.size(); i++) {
 				String query2 = "insert into Pliki(id_grupy, plik) values(?,?)";
 				PreparedStatement prs = conn.prepareStatement(query2);
 				prs.setInt(1, id_group);
-				// prs.setString(2, listFiles.get(i).getAbsolutePath());
-				// prs.setBlob(2, listFiles.get(i).getAbsolutePath());
-				Blob blob1 = conn.createBlob();
+				prs.setBytes(2, readFile(listFiles.get(i).getAbsolutePath()));
+				/*Blob blob1 = conn.createBlob();
 				int of = 0;
-				OutputStream out = blob1.setBinaryStream(of);
-				// ImageIO.write(im, formatName, output)
-				prs.setBlob(2, blob1);
-
+				OutputStream out = blob1.setBinaryStream(of);*/
 			}
 			// wypis pliku
 			String query3 = "select * from Pliki";
@@ -250,11 +280,32 @@ public class DataBase {
 			while (rs2.next()) {
 				System.out.println("Plik o id :" + rs2.getInt("id") + " objekt " + rs2.getObject("plik"));
 			}
+			return id_group;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return 0;
 	}
 
+	 private byte[] readFile(String file) {
+	        ByteArrayOutputStream bos = null;
+	        try {
+	            File f = new File(file);
+	            FileInputStream fis = new FileInputStream(f);
+	            byte[] buffer = new byte[1024];
+	            bos = new ByteArrayOutputStream();
+	            for (int len; (len = fis.read(buffer)) != -1;) {
+	                bos.write(buffer, 0, len);
+	            }
+	        } catch (FileNotFoundException e) {
+	            System.err.println(e.getMessage());
+	        } catch (IOException e2) {
+	            System.err.println(e2.getMessage());
+	        }
+	        return bos != null ? bos.toByteArray() : null;
+	    }
+	
+	
 	// Sprawdzamy czy u¿ytkownik o id posiada jakies pojazdy
 	public boolean findIfIsMoto(int id) {
 		System.out.println("ID u¿ytkownika"+id);
@@ -513,5 +564,66 @@ public class DataBase {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public String getUserMail(int id) {
+		try {
+			String query = "select user_mail from User where id=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				return rs.getString("user_mail");
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public int Login(String selectedItem) {
+		String query = "select id from User where user_name=?";
+		int id = 0;
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, selectedItem);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				id = rs.getInt("id");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+
+	public boolean isClose() {
+		// TODO Auto-generated method stub
+		try {
+			return conn.isClosed();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public List<RepairNotes> getRepairList(int id_user) {
+		List<RepairNotes> list = new LinkedList<>();
+		try {
+			String query = "select * from Repair_Note where id_user = ?";
+		PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id_user);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				list.add(new RepairNotes(rs.getInt("id"), id_user, rs.getString("title"), rs.getString("note"), rs.getString("id_mod"), rs.getDate("data_note"), rs.getString("importatntLvl"), rs.getInt("id_group_files"), rs.getString("moto")));
+			}
+			return list;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }
