@@ -74,5 +74,8 @@ public class RepairNotes {
 	public int getId_group_files() {
 		return id_group_files;
 	}
+	public String getMoto() {
+		return moto;
+	}
 
 }

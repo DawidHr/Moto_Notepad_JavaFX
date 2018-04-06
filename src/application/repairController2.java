@@ -51,10 +51,12 @@ public class repairController2 implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
 		db = new DataBase();
+	}
+
+	public void main() {
+		// TODO Auto-generated method stub
 		list = db.getRepairList(id_user);
-		
 		if(!list.isEmpty())
 		{for(RepairNotes c: list) {
 			System.out.println(c.toString());
@@ -65,8 +67,6 @@ public class repairController2 implements Initializable{
 		date2.setCellValueFactory(new PropertyValueFactory<RepairNotes, Date>("data_note"));
 		lvl.setCellValueFactory(new PropertyValueFactory<RepairNotes, String>("importatntLvl"));
 	}
-
-
 	public void setId(int i) {
 		// TODO Auto-generated method stub
 		id_user=i;
@@ -96,6 +96,7 @@ public class repairController2 implements Initializable{
 	
 	public void addNewNote() {
 	try {
+		System.out.println(" repairController2.java id_user="+id_user);
 			Stage primaryStage = (Stage) addButton.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader();
 			Parent root2 = loader.load(getClass().getResource("repairViewAdd.fxml").openStream());
@@ -112,6 +113,23 @@ public class repairController2 implements Initializable{
 	}
 
 	public void viewNote() {
-		
+		try {
+			Stage primaryStage = (Stage) addButton.getScene().getWindow();
+			FXMLLoader loader = new FXMLLoader();
+			Parent root2 = loader.load(getClass().getResource("repairViewViewSelectedNote.fxml").openStream());
+			repairControllerViewSelectedNote repairControllerViewSelectedNotec = (repairControllerViewSelectedNote) loader.getController();
+			repairControllerViewSelectedNotec.setId(id_user);
+			repairControllerViewSelectedNotec.setRepairMode(repairMode);
+			repairControllerViewSelectedNotec.setData(table.getSelectionModel().getSelectedItem().getId());
+			Scene scene = new Scene(root2);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+
+
+
 }

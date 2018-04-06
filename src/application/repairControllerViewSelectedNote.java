@@ -26,9 +26,10 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class repairController2Add implements Initializable{
+public class repairControllerViewSelectedNote implements Initializable{
 
 	@FXML
 	Button cencelButton;
@@ -45,15 +46,15 @@ public class repairController2Add implements Initializable{
 	@FXML
 	Button addImageNote;
 	
-	
-	List<File> listFiles = new LinkedList<>();
-	int id_user;
-	int repairMode;
 	DataBase db;
-	
 	ObservableList<String> observableList1 = FXCollections.observableArrayList();
 	List<Vehicle> list = new LinkedList<>();
 	ObservableList<String> observableList2 = FXCollections.observableArrayList();
+	List<File> listFiles = new LinkedList<>();
+	int id_user;
+	int repairMode;
+	RepairNotes repairNote;
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -70,6 +71,24 @@ public class repairController2Add implements Initializable{
 		}
 		moto.setItems(observableList2);
 	}
+	
+	public void setRepairMode(int i) {
+		// TODO Auto-generated method stub
+		repairMode=i;
+	}
+	public void setId(int i) {
+		// TODO Auto-generated method stub
+		id_user=i;
+	}
+	
+	public void setData(int id) {
+		repairNote = db.getRepairSelectedNote(id);
+		title.setText(repairNote.getTitle());
+		note.setText(repairNote.getNote());
+		importantLvl.getSelectionModel().select(repairNote.getImportatntLvl());
+		moto.getSelectionModel().select(repairNote.getMoto());
+	}
+	
 	public void cencel() {
 		try {
 			Stage primaryStage = (Stage) cencelButton.getScene().getWindow();
@@ -77,7 +96,6 @@ public class repairController2Add implements Initializable{
 			Parent root1 = loader.load(getClass().getResource("repairView2.fxml").openStream());
 			repairController2 repairController2C = (repairController2) loader.getController();
 			//Ustawianie id u¿ytkownika
-			
 			repairController2C.setId(id_user);
 			repairController2C.setRepairMode(repairMode);
 			repairController2C.main();
@@ -89,7 +107,7 @@ public class repairController2Add implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	
+	//Tu jestem
 	
 	public void saveNote() {
 		System.out.println("Jestem w saveNote()");
@@ -102,34 +120,11 @@ public class repairController2Add implements Initializable{
 	}
 	
 	public void getImage() {
-		try {
-			System.out.println("repairController2Add.java id_user="+id_user);
-			Stage primaryStage = (Stage) cencelButton.getScene().getWindow();
-			FXMLLoader loader = new FXMLLoader();
-			Parent root1 = loader.load(getClass().getResource("repairViewAdd2.fxml").openStream());
-			repairController2Add2 repairController2Add2 = (repairController2Add2) loader.getController();
-			//Ustawianie id u¿ytkownika
-			
-			repairController2Add2.setId(id_user);
-			repairController2Add2.setList(listFiles);
-			repairController2Add2.setRepairMode(repairMode);
-			repairController2Add2.setNotes(title.getText(), note.getText(), moto.getSelectionModel().getSelectedItem(), importantLvl.getSelectionModel().getSelectedItem());
-			Scene scene = new Scene(root1);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//db.readPicture(repairNote.getId_group_files(), "nazwa_pliku");
+		db.getImages(repairNote.getId_group_files());
+		
 	}
-	public void setRepairMode(int i) {
-		// TODO Auto-generated method stub
-		repairMode=i;
-	}
-	public void setId(int i) {
-		// TODO Auto-generated method stub
-		id_user=i;
-	}
+	
 	public void setFiles(List<File> listFiles) {
 		// TODO Auto-generated method stub
 		this.listFiles = listFiles;

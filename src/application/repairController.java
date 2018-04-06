@@ -42,12 +42,14 @@ public class repairController implements Initializable{
 	
 	public void moveTo() {
 		try {
+			System.out.println(" repairController.java id_user="+id_user);
 			Stage primaryStage = (Stage) buttonRepairDone.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader();
 			Parent root1 = loader.load(getClass().getResource("repairView2.fxml").openStream());
 			repairController2 repairController2c = (repairController2) loader.getController();
 			repairController2c.setId(id_user);
 			repairController2c.setRepairMode(repairMode);
+			repairController2c.main();
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

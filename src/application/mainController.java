@@ -128,7 +128,10 @@ public class mainController implements Initializable {
 			 */
 			else {
 			Stage primaryStage = (Stage) buttonRepair.getScene().getWindow();
-			Parent root1 = FXMLLoader.load(getClass().getResource("repairView.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			Parent root1 = loader.load(getClass().getResource("repairView.fxml").openStream());
+			repairController repairControllerc = (repairController) loader.getController();
+			repairControllerc.setId(id);
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

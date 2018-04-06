@@ -67,8 +67,8 @@ public class repairController2Add2 implements Initializable{
 			repairController2Add repairController2AddC = (repairController2Add) loader.getController();
 			//Ustawianie id u¿ytkownika
 			
-			repairController2AddC.setId(1);
-			repairController2AddC.setRepairMode(1);
+			repairController2AddC.setId(id_user);
+			repairController2AddC.setRepairMode(repairMode);
 			Scene scene = new Scene(root1);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -87,8 +87,8 @@ public class repairController2Add2 implements Initializable{
 			repairController2Add repairController2AddC = (repairController2Add) loader.getController();
 			//Ustawianie id u¿ytkownika
 			
-			repairController2AddC.setId(1);
-			repairController2AddC.setRepairMode(1);
+			repairController2AddC.setId(id_user);
+			repairController2AddC.setRepairMode(repairMode);
 			repairController2AddC.setFiles(listFiles);
 			repairController2AddC.setNotes(title, note, moto, importantlvl);
 			Scene scene = new Scene(root1);

@@ -4,7 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.ReadOnlyFileSystemException;
 import java.sql.Blob;
@@ -252,6 +254,12 @@ public class DataBase {
 	
 	public int saveFiles(List<File> listFiles) {
 		try {
+			//Wypisanie wszystkich plików
+			for(File c: listFiles) {
+				System.out.println(c.getName()+" "+c.getAbsolutePath());
+			}
+			
+			
 			//Znalezienie ostatniej numeru grupy plików
 			int id_group = 0;
 			String query1 = "select * from Pliki";
@@ -263,14 +271,16 @@ public class DataBase {
 			//wybranie nastepnego numeru grupy plików
 			id_group = id_group + 1;
 			//Zapisanie plików do bazy danych
-			for (int i = 1; i <= listFiles.size(); i++) {
-				String query2 = "insert into Pliki(id_grupy, plik) values(?,?)";
+			for (int i = 0; i < listFiles.size(); i++) {
+				System.out.println("=============================="
+						+"i="+i+" listFiles="+listFiles.size());
+				String query2 = "insert into Pliki(id_grupy, plik, file_name) values(?,?,?)";
 				PreparedStatement prs = conn.prepareStatement(query2);
 				prs.setInt(1, id_group);
 				prs.setBytes(2, readFile(listFiles.get(i).getAbsolutePath()));
-				/*Blob blob1 = conn.createBlob();
-				int of = 0;
-				OutputStream out = blob1.setBinaryStream(of);*/
+				prs.setString(3, listFiles.get(i).getName());
+				prs.executeUpdate();
+				System.out.println(listFiles.get(i).getName());
 			}
 			// wypis pliku
 			String query3 = "select * from Pliki";
@@ -303,6 +313,51 @@ public class DataBase {
 	            System.err.println(e2.getMessage());
 	        }
 	        return bos != null ? bos.toByteArray() : null;
+	    }
+		//Zapisywanie plików z danej grupy na dysku
+		public void getImages(int id_group_files) {
+			try {
+				String query = "select * from Pliki where id_grupy=?";
+				PreparedStatement prs = conn.prepareStatement(query);
+				prs.setInt(1, id_group_files);
+				ResultSet rs = prs.executeQuery();
+				while(rs.next()) {
+					readPicture(rs.getInt("id"), rs.getString("file_name"));
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		
+			
+		}
+		
+	 public void readPicture(int noteId, String filename) {
+	      //  String selectSQL = "SELECT plik FROM Pliki WHERE id_grupy=?";
+	        String selectSQL = "SELECT plik FROM Pliki WHERE id=?";
+	        ResultSet rs = null;
+	        FileOutputStream fos = null;
+	        PreparedStatement pstmt = null;
+	 
+	        try {
+	            pstmt = conn.prepareStatement(selectSQL);
+	            pstmt.setInt(1, noteId);
+	            rs = pstmt.executeQuery();
+	 
+	            // write binary stream into file
+	            File file = new File(filename);
+	            fos = new FileOutputStream(file);
+	 
+	            System.out.println("Writing BLOB to file " + file.getAbsolutePath());
+	            while (rs.next()) {
+	                InputStream input = rs.getBinaryStream("plik");
+	                byte[] buffer = new byte[1024];
+	                while (input.read(buffer) > 0) {
+	                    fos.write(buffer);
+	                }
+	            }
+	        } catch (SQLException | IOException e) {
+	            System.out.println(e.getMessage());
+	        } 
 	    }
 	
 	
@@ -626,4 +681,22 @@ public class DataBase {
 		}
 		return list;
 	}
+
+	public RepairNotes getRepairSelectedNote(int id) {
+		RepairNotes object = null;
+		try {
+			String query = "select * from Repair_Note where id=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				object = new RepairNotes(rs.getInt("id"), rs.getInt("id_user"), rs.getString("title"), rs.getString("note"), rs.getString("id_mod"), rs.getDate("data_note"), rs.getString("importatntLvl"), rs.getInt("id_group_files"), rs.getString("moto"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return object;
+	}
+
+
 }

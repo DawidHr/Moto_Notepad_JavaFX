@@ -31,10 +31,6 @@ public class LoginController implements Initializable{
 		// TODO Auto-generated method stub
 		db = new DataBase();
 		List<String> userNamesList = db.getUserNames();
-		System.out.println("Lista U¿ytkowników");
-		for(String element: userNamesList) {
-			System.out.println(element);
-		}
 		ObservableList<String> listUsers = FXCollections.observableArrayList(userNamesList);
 		userName.setItems(listUsers);
 	}
