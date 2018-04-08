@@ -115,28 +115,13 @@ public class repairControllerViewSelectedNote implements Initializable{
 		return;
 	}
 	String repairMode1 = (repairMode==1) ? "Wykonane" : "Do zrobienia";
-		db.saveRepairNote(id_user, repairMode1, moto.getSelectionModel().getSelectedItem(), title.getText(), note.getText(), importantLvl.getSelectionModel().getSelectedItem(), listFiles);
+	System.out.println("===================================="
+			+"\n id_user="+repairNote.getId());
+		db.udpateRepairNote(repairNote.getId(),id_user, repairMode1, moto.getSelectionModel().getSelectedItem(), title.getText(), note.getText(), importantLvl.getSelectionModel().getSelectedItem(), listFiles);
 		cencel();
 	}
 	
 	public void getImage() {
-		//db.readPicture(repairNote.getId_group_files(), "nazwa_pliku");
 		db.getImages(repairNote.getId_group_files());
-		
-	}
-	
-	public void setFiles(List<File> listFiles) {
-		// TODO Auto-generated method stub
-		this.listFiles = listFiles;
-		for(File e: this.listFiles) {
-			System.out.println(e.getName());
-		}
-	}
-	public void setNotes(String title2, String note2, String moto2, String importantlvl2) {
-		// TODO Auto-generated method stub
-		title.setText(title2);
-		note.setText(note2);
-		moto.getSelectionModel().select(moto2);
-		importantLvl.getSelectionModel().select(importantlvl2);
 	}
 }

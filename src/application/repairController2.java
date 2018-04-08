@@ -32,6 +32,8 @@ public class repairController2 implements Initializable{
 	Button addButton;
 	@FXML
 	Button viewButton;
+	@FXML
+	Button deleteButton;
 	
 	int id_user;
 	//Czy do naprawy czy naprawione
@@ -56,16 +58,17 @@ public class repairController2 implements Initializable{
 
 	public void main() {
 		// TODO Auto-generated method stub
-		list = db.getRepairList(id_user);
+		String repairMode1 = (repairMode==1) ? "Wykonane" : "Do zrobienia";
+		list = db.getRepairList(id_user, repairMode1);
 		if(!list.isEmpty())
 		{for(RepairNotes c: list) {
 			System.out.println(c.toString());
-		}}
+		}
 		observableList1.addAll(list);
 		table.setItems(observableList1);
 		title.setCellValueFactory(new PropertyValueFactory<RepairNotes, String>("title"));
 		date2.setCellValueFactory(new PropertyValueFactory<RepairNotes, Date>("data_note"));
-		lvl.setCellValueFactory(new PropertyValueFactory<RepairNotes, String>("importatntLvl"));
+		lvl.setCellValueFactory(new PropertyValueFactory<RepairNotes, String>("importatntLvl"));}
 	}
 	public void setId(int i) {
 		// TODO Auto-generated method stub
@@ -127,6 +130,15 @@ public class repairController2 implements Initializable{
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void delete() {
+		if(table.getSelectionModel().getSelectedItem() != null) {
+		db.deleteRepairNote(table.getSelectionModel().getSelectedItem().getId()); 
+		list.clear();
+		observableList1.clear();
+		main();
 		}
 	}
 

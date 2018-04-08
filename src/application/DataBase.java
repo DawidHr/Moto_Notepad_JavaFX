@@ -226,54 +226,52 @@ public class DataBase {
 		}
 	}
 
-	public void saveRepairNote(int id_user, String id_mod, String moto,  String title, String note,  String importantLvl, List<File> listFiles) {
+	public void saveRepairNote(int id_user, String id_mod, String moto, String title, String note, String importantLvl,
+			List<File> listFiles) {
 		System.out.println("saveRepairNote()");
 		try {
-			int id_group =0;
-			if(!(listFiles.isEmpty())) {
-			id_group = saveFiles(listFiles);
+			int id_group = 0;
+			if (!(listFiles.isEmpty())) {
+				id_group = saveFiles(listFiles);
 			}
 			String query = "insert into Repair_Note(id_user, id_mod, title, data_note, importatntLvl, id_group_files, note, moto)  values(?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id_user);
 			prs.setString(2, id_mod);
 			prs.setString(3, title);
-			LocalDate date1  = LocalDate.now();
-			Date date2 = Date.valueOf(date1); 
+			LocalDate date1 = LocalDate.now();
+			Date date2 = Date.valueOf(date1);
 			prs.setDate(4, date2);
 			prs.setString(5, importantLvl);
 			prs.setInt(6, id_group);
 			prs.setString(7, note);
 			prs.setString(8, moto);
 			prs.executeUpdate();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public int saveFiles(List<File> listFiles) {
 		try {
-			//Wypisanie wszystkich plików
-			for(File c: listFiles) {
-				System.out.println(c.getName()+" "+c.getAbsolutePath());
+			// Wypisanie wszystkich plików
+			for (File c : listFiles) {
+				System.out.println(c.getName() + " " + c.getAbsolutePath());
 			}
-			
-			
-			//Znalezienie ostatniej numeru grupy plików
+
+			// Znalezienie ostatniej numeru grupy plików
 			int id_group = 0;
 			String query1 = "select * from Pliki";
 			Statement st = conn.createStatement();
 			ResultSet rs = st.executeQuery(query1);
-			while(rs.next()) {
+			while (rs.next()) {
 				id_group = rs.getInt("id_grupy");
 			}
-			//wybranie nastepnego numeru grupy plików
+			// wybranie nastepnego numeru grupy plików
 			id_group = id_group + 1;
-			//Zapisanie plików do bazy danych
+			// Zapisanie plików do bazy danych
 			for (int i = 0; i < listFiles.size(); i++) {
-				System.out.println("=============================="
-						+"i="+i+" listFiles="+listFiles.size());
+				System.out.println("==============================" + "i=" + i + " listFiles=" + listFiles.size());
 				String query2 = "insert into Pliki(id_grupy, plik, file_name) values(?,?,?)";
 				PreparedStatement prs = conn.prepareStatement(query2);
 				prs.setInt(1, id_group);
@@ -297,82 +295,80 @@ public class DataBase {
 		return 0;
 	}
 
-	 private byte[] readFile(String file) {
-	        ByteArrayOutputStream bos = null;
-	        try {
-	            File f = new File(file);
-	            FileInputStream fis = new FileInputStream(f);
-	            byte[] buffer = new byte[1024];
-	            bos = new ByteArrayOutputStream();
-	            for (int len; (len = fis.read(buffer)) != -1;) {
-	                bos.write(buffer, 0, len);
-	            }
-	        } catch (FileNotFoundException e) {
-	            System.err.println(e.getMessage());
-	        } catch (IOException e2) {
-	            System.err.println(e2.getMessage());
-	        }
-	        return bos != null ? bos.toByteArray() : null;
-	    }
-		//Zapisywanie plików z danej grupy na dysku
-		public void getImages(int id_group_files) {
-			try {
-				String query = "select * from Pliki where id_grupy=?";
-				PreparedStatement prs = conn.prepareStatement(query);
-				prs.setInt(1, id_group_files);
-				ResultSet rs = prs.executeQuery();
-				while(rs.next()) {
-					readPicture(rs.getInt("id"), rs.getString("file_name"));
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
+	private byte[] readFile(String file) {
+		ByteArrayOutputStream bos = null;
+		try {
+			File f = new File(file);
+			FileInputStream fis = new FileInputStream(f);
+			byte[] buffer = new byte[1024];
+			bos = new ByteArrayOutputStream();
+			for (int len; (len = fis.read(buffer)) != -1;) {
+				bos.write(buffer, 0, len);
 			}
-		
-			
+		} catch (FileNotFoundException e) {
+			System.err.println(e.getMessage());
+		} catch (IOException e2) {
+			System.err.println(e2.getMessage());
 		}
-		
-	 public void readPicture(int noteId, String filename) {
-	      //  String selectSQL = "SELECT plik FROM Pliki WHERE id_grupy=?";
-	        String selectSQL = "SELECT plik FROM Pliki WHERE id=?";
-	        ResultSet rs = null;
-	        FileOutputStream fos = null;
-	        PreparedStatement pstmt = null;
-	 
-	        try {
-	            pstmt = conn.prepareStatement(selectSQL);
-	            pstmt.setInt(1, noteId);
-	            rs = pstmt.executeQuery();
-	 
-	            // write binary stream into file
-	            File file = new File(filename);
-	            fos = new FileOutputStream(file);
-	 
-	            System.out.println("Writing BLOB to file " + file.getAbsolutePath());
-	            while (rs.next()) {
-	                InputStream input = rs.getBinaryStream("plik");
-	                byte[] buffer = new byte[1024];
-	                while (input.read(buffer) > 0) {
-	                    fos.write(buffer);
-	                }
-	            }
-	        } catch (SQLException | IOException e) {
-	            System.out.println(e.getMessage());
-	        } 
-	    }
-	
-	
+		return bos != null ? bos.toByteArray() : null;
+	}
+
+	// Zapisywanie plików z danej grupy na dysku
+	public void getImages(int id_group_files) {
+		try {
+			String query = "select * from Pliki where id_grupy=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id_group_files);
+			ResultSet rs = prs.executeQuery();
+			while (rs.next()) {
+				readPicture(rs.getInt("id"), rs.getString("file_name"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void readPicture(int noteId, String filename) {
+		// String selectSQL = "SELECT plik FROM Pliki WHERE id_grupy=?";
+		String selectSQL = "SELECT plik FROM Pliki WHERE id=?";
+		ResultSet rs = null;
+		FileOutputStream fos = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = conn.prepareStatement(selectSQL);
+			pstmt.setInt(1, noteId);
+			rs = pstmt.executeQuery();
+
+			// write binary stream into file
+			File file = new File(filename);
+			fos = new FileOutputStream(file);
+
+			System.out.println("Writing BLOB to file " + file.getAbsolutePath());
+			while (rs.next()) {
+				InputStream input = rs.getBinaryStream("plik");
+				byte[] buffer = new byte[1024];
+				while (input.read(buffer) > 0) {
+					fos.write(buffer);
+				}
+			}
+		} catch (SQLException | IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
 	// Sprawdzamy czy u¿ytkownik o id posiada jakies pojazdy
 	public boolean findIfIsMoto(int id) {
-		System.out.println("ID u¿ytkownika"+id);
+		System.out.println("ID u¿ytkownika" + id);
 		try {
 			String query1 = "select * from Moto";
 			Statement st = conn.createStatement();
 			ResultSet rs1 = st.executeQuery(query1);
-			while(rs1.next()) {
-				System.out.println(rs1.getString("id")+" "+rs1.getInt("id_user") + " "+rs1.getString("marka"));
+			while (rs1.next()) {
+				System.out.println(rs1.getString("id") + " " + rs1.getInt("id_user") + " " + rs1.getString("marka"));
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
@@ -448,10 +444,26 @@ public class DataBase {
 	// Funkcja usuwaj¹ca wybrany pojazd z Bazy Danych
 	public void deleteVehicle(int id_moto) {
 		try {
-			String query = "delete from Moto where id=?";
+			String text="";
+			int id_user=0;
+			String query = "select * from Moto where id=?";
 			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id_moto);
-			prs.executeUpdate();
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				text=rs.getString("marka")+" "+rs.getString("model");
+				id_user=rs.getInt("id_user");
+			}
+			String query1 = "delete from Moto where id=?";
+			PreparedStatement prs1 = conn.prepareStatement(query1);
+			prs1.setInt(1, id_moto);
+			prs1.executeUpdate();
+			String query2 = "delete from Repair_Note where moto=? and id_user=?";
+			PreparedStatement prs2 = conn.prepareStatement(query2);
+			System.out.println("moto "+text);
+			prs2.setString(1, text);
+			prs2.setInt(2, id_user);
+			prs2.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -530,8 +542,7 @@ public class DataBase {
 			prs.setFloat(5, fprize);
 			prs.setDate(6, data2);
 			prs.executeUpdate();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -543,15 +554,14 @@ public class DataBase {
 			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id);
 			ResultSet rs = prs.executeQuery();
-			while(rs.next()) {
-				list.add(new Fuel(rs.getInt("id"), rs.getString("moto"), rs.getString("fuel"), rs.getFloat("howMuch"), rs.getFloat("howMuchPrize"), rs.getDate("Date")));
-			System.out.println("====================="
-				+"\n"+rs.getString("moto"));
-			
+			while (rs.next()) {
+				list.add(new Fuel(rs.getInt("id"), rs.getString("moto"), rs.getString("fuel"), rs.getFloat("howMuch"),
+						rs.getFloat("howMuchPrize"), rs.getDate("Date")));
+				System.out.println("=====================" + "\n" + rs.getString("moto"));
+
 			}
 			return list;
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// TODO Auto-generated method stub
@@ -565,8 +575,7 @@ public class DataBase {
 			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id);
 			prs.executeUpdate();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -577,11 +586,10 @@ public class DataBase {
 			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id);
 			ResultSet rs = prs.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				return rs.getString("user_name");
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -589,36 +597,35 @@ public class DataBase {
 
 	public void updateProfile(int id, String pass, String mail1) {
 		try {
-			String password="";
-			String mail="";
+			String password = "";
+			String mail = "";
 			String query = "select * from User where id=?";
 			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id);
 			ResultSet rs = prs.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				password = rs.getString("user_password");
-				mail=rs.getString("user_mail");
+				mail = rs.getString("user_mail");
 			}
-			if(!(password.equals(pass) || password=="")) {
-			String query1 = "update User set user_password=? where id = ?";
-			PreparedStatement prs1 = conn.prepareStatement(query1);
-			prs1.setString(1, pass);
-			prs1.setInt(2, id);
-			prs1.executeUpdate();
+			if (!(password.equals(pass) || password == "")) {
+				String query1 = "update User set user_password=? where id = ?";
+				PreparedStatement prs1 = conn.prepareStatement(query1);
+				prs1.setString(1, pass);
+				prs1.setInt(2, id);
+				prs1.executeUpdate();
 			}
-			if(!(mail.equals(mail1) || mail=="")) {
+			if (!(mail.equals(mail1) || mail == "")) {
 				String query2 = "update User set user_mail=? where id = ?";
 				PreparedStatement prs2 = conn.prepareStatement(query2);
 				prs2.setString(1, mail1);
 				prs2.setInt(2, id);
 				prs2.executeUpdate();
 			}
-			
-		}
-		catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public String getUserMail(int id) {
@@ -627,11 +634,10 @@ public class DataBase {
 			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id);
 			ResultSet rs = prs.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				return rs.getString("user_mail");
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -664,19 +670,21 @@ public class DataBase {
 		return true;
 	}
 
-	public List<RepairNotes> getRepairList(int id_user) {
+	public List<RepairNotes> getRepairList(int id_user, String repairMode) {
+		System.out.println(repairMode);
 		List<RepairNotes> list = new LinkedList<>();
 		try {
-			String query = "select * from Repair_Note where id_user = ?";
-		PreparedStatement prs = conn.prepareStatement(query);
+			String query = "select * from Repair_Note where id_user = ? and id_mod=?";
+			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id_user);
+			prs.setString(2, repairMode);
 			ResultSet rs = prs.executeQuery();
-			while(rs.next()) {
-				list.add(new RepairNotes(rs.getInt("id"), id_user, rs.getString("title"), rs.getString("note"), rs.getString("id_mod"), rs.getDate("data_note"), rs.getString("importatntLvl"), rs.getInt("id_group_files"), rs.getString("moto")));
+			while (rs.next()) {
+				list.add(new RepairNotes(rs.getInt("id"), id_user, rs.getString("title"), rs.getString("note"),
+						rs.getString("id_mod"), rs.getDate("data_note"), rs.getString("importatntLvl"),
+						rs.getInt("id_group_files"), rs.getString("moto")));
 			}
-			return list;
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
@@ -689,14 +697,77 @@ public class DataBase {
 			PreparedStatement prs = conn.prepareStatement(query);
 			prs.setInt(1, id);
 			ResultSet rs = prs.executeQuery();
-			while(rs.next()) {
-				object = new RepairNotes(rs.getInt("id"), rs.getInt("id_user"), rs.getString("title"), rs.getString("note"), rs.getString("id_mod"), rs.getDate("data_note"), rs.getString("importatntLvl"), rs.getInt("id_group_files"), rs.getString("moto"));
+			while (rs.next()) {
+				object = new RepairNotes(rs.getInt("id"), rs.getInt("id_user"), rs.getString("title"),
+						rs.getString("note"), rs.getString("id_mod"), rs.getDate("data_note"),
+						rs.getString("importatntLvl"), rs.getInt("id_group_files"), rs.getString("moto"));
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return object;
 	}
 
+	public void udpateRepairNote(int id, int id_user, String repairMode1, String selectedItem, String text,
+			String text2, String selectedItem2, List<File> listFiles) {
+		try {
+			RepairNotes repairNote = null;
+			String query = "select * from Repair_Note where id=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while (rs.next()) {
+				repairNote = new RepairNotes(rs.getInt("id"), rs.getInt("id_user"), rs.getString("title"),
+						rs.getString("note"), rs.getString("id_mod"), rs.getDate("data_note"),
+						rs.getString("importatntLvl"), rs.getInt("id_group_files"), rs.getString("moto"));
+			}
+			
+			if (!(repairMode1.equalsIgnoreCase(repairNote.getId_mod()))) {
+				String query1 = "update Repair_Note set id_mod=? where id=?";
+				PreparedStatement prs1 = conn.prepareStatement(query1);
+				prs1.setString(1, repairMode1);
+				prs1.setInt(2, id);
+				prs1.executeUpdate();
+			}
+			if (!(text.equalsIgnoreCase(repairNote.getTitle()))) {
+				System.out.println(text+" = " +repairNote.getTitle());
+				String query1 = "update Repair_Note set title=? where id=?";
+				PreparedStatement prs1 = conn.prepareStatement(query1);
+				prs1.setString(1, text);
+				prs1.setInt(2, id);
+				prs1.executeUpdate();
+			}
+			if (!(text2.equalsIgnoreCase(repairNote.getNote()))) {
+				String query1 = "update Repair_Note set note=? where id=?";
+				PreparedStatement prs1 = conn.prepareStatement(query1);
+				prs1.setString(1, text2);
+				prs1.setInt(2, id);
+				prs1.executeUpdate();
+			}
+			if (!(selectedItem2.equalsIgnoreCase(repairNote.getImportatntLvl()))) {
+				String query1 = "update Repair_Note set importatntLvl=? where id=?";
+				PreparedStatement prs1 = conn.prepareStatement(query1);
+				prs1.setString(1, selectedItem2);
+				prs1.setInt(2, id);
+				prs1.executeUpdate();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void deleteRepairNote(int id) {
+		try {
+			String query = "delete from Repair_Note where id=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			prs.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }

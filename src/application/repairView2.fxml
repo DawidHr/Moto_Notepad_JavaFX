@@ -39,6 +39,11 @@
                <GridPane.margin>
                   <Insets left="27.0" />
                </GridPane.margin></Button>
+            <Button fx:id="deleteButton" maxHeight="40.0" maxWidth="75.0" minHeight="40.0" minWidth="75.0" mnemonicParsing="false" onAction="#delete" prefHeight="40.0" prefWidth="75.0" text="Kasuj">
+               <GridPane.margin>
+                  <Insets left="200.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
       <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
