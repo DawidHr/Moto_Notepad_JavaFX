@@ -25,6 +25,14 @@ public class profileController implements Initializable{
 	@FXML
 	Label NameProfileLabel;
 	@FXML
+	Label CountMotoLabel;
+	@FXML
+	Label CountRepairNotesDoneLabel;
+	@FXML
+	Label CountRepairNotesNotDoneLabel;
+	@FXML
+	Label CountNotesLabel;
+	@FXML
 	Button CencelButton;
 	@FXML
 	Button ChangeButton;
@@ -42,9 +50,28 @@ public class profileController implements Initializable{
 		this.id=id;
 	}
 	public void setProfileName() {
+		String temp="";
+		int tempInt=0;
+		
 		profileNameString = db.getProfileName(id);
-		String newProfileLabel =NameProfileLabel.getText()+" "+profileNameString;
-		NameProfileLabel.setText(newProfileLabel);
+		temp =NameProfileLabel.getText()+" "+profileNameString;
+		NameProfileLabel.setText(temp);
+		
+		tempInt = db.getCountMotoForUser(id);
+		temp =CountMotoLabel.getText()+" "+tempInt;
+		CountMotoLabel.setText(temp);
+		
+		tempInt = db.getCountNotesForRepair(id, "Wykonane");
+		temp = CountRepairNotesDoneLabel.getText()+ " "+tempInt;
+		CountRepairNotesDoneLabel.setText(temp);
+		
+		tempInt = db.getCountNotesForRepair(id, "Do zrobienia");
+		temp = CountRepairNotesNotDoneLabel.getText() + " " + tempInt;
+		CountRepairNotesNotDoneLabel.setText(temp);
+		
+		tempInt = db.getCountNotes(id);
+		temp = CountNotesLabel.getText()+" "+tempInt;
+		CountNotesLabel.setText(temp);
 	}
 	
 	public void changUserInfo() {

@@ -770,4 +770,53 @@ public class DataBase {
 		
 	}
 
+	public int getCountMotoForUser(int id) {
+		int howManyMoto = 0;
+		try {
+			String query = "select count(marka) from Moto where id_user=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				howManyMoto = rs.getInt("count(marka)");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return howManyMoto;
+	}
+
+	public int getCountNotesForRepair(int id, String mod) {
+		int countNotesForRepair = 0;
+		try {
+			String query = "select count(title) from Repair_Note where id_user=? and id_mod=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			prs.setString(2, mod);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				countNotesForRepair = rs.getInt("count(title)");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return countNotesForRepair;
+	}
+
+	public int getCountNotes(int id) {
+		int countNotes =0;
+		try {
+			String query = "select count(title) from Note where id_user=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			while(rs.next()) {
+				countNotes = rs.getInt("count(title)");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return countNotes;
+	}
+
 }
