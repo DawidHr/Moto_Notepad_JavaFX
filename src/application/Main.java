@@ -24,7 +24,9 @@ public class Main extends Application {
 					scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 					primaryStage.setScene(scene);
 					primaryStage.show();
-				} catch (Exception e) {
+					primaryStage.setTitle("MOTO NOTATNIK");
+					primaryStage.setResizable(false);
+					} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
@@ -34,7 +36,9 @@ public class Main extends Application {
 					scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 					primaryStage.setScene(scene);
 					primaryStage.show();
-				} catch (Exception e) {
+					primaryStage.setTitle("MOTO NOTATNIK");
+					primaryStage.setResizable(false);
+					} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
