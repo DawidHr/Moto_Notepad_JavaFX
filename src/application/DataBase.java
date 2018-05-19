@@ -818,5 +818,39 @@ public class DataBase {
 		}
 		return countNotes;
 	}
+	
+	public void saveAvatarImage(int id, File file) {
+		try {
+				String query = "update User set image=? where id=?";
+				PreparedStatement prs = conn.prepareStatement(query);
+				prs.setInt(2, id);
+				prs.setBytes(1, readFile(file.getAbsolutePath()));
+				prs.executeUpdate();
+			} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
+	public File getIcon(int id) {
+		try {
+			String query = "select image from User where id=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setInt(1, id);
+			ResultSet rs = prs.executeQuery();
+			File file = new File("avatar.jpg");
+			FileOutputStream fos = new FileOutputStream(file);
+			while(rs.next()) {
+				InputStream input = rs.getBinaryStream("image");
+				byte[] buffer = new byte[1024];
+				while (input.read(buffer) > 0) {
+					fos.write(buffer);
+				}
+				return file;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -18,9 +19,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
-public class profileController implements Initializable{
+public class profileController implements Initializable {
 
 	@FXML
 	Label NameProfileLabel;
@@ -36,44 +41,76 @@ public class profileController implements Initializable{
 	Button CencelButton;
 	@FXML
 	Button ChangeButton;
+	@FXML
+	Button ImageButton;
 	
 	DataBase db;
 	int id;
-	String profileNameString; 
+	String profileNameString;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
 		db = new DataBase();
-	
 	}
+
 	public void setId(int id) {
-		this.id=id;
+		this.id = id;
 	}
+
 	public void setProfileName() {
-		String temp="";
-		int tempInt=0;
-		
+		String temp = "";
+		int tempInt = 0;
+
 		profileNameString = db.getProfileName(id);
-		temp =NameProfileLabel.getText()+" "+profileNameString;
+		temp = NameProfileLabel.getText() + " " + profileNameString;
 		NameProfileLabel.setText(temp);
-		
+
 		tempInt = db.getCountMotoForUser(id);
-		temp =CountMotoLabel.getText()+" "+tempInt;
+		temp = CountMotoLabel.getText() + " " + tempInt;
 		CountMotoLabel.setText(temp);
-		
+
 		tempInt = db.getCountNotesForRepair(id, "Wykonane");
-		temp = CountRepairNotesDoneLabel.getText()+ " "+tempInt;
+		temp = CountRepairNotesDoneLabel.getText() + " " + tempInt;
 		CountRepairNotesDoneLabel.setText(temp);
-		
+
 		tempInt = db.getCountNotesForRepair(id, "Do zrobienia");
 		temp = CountRepairNotesNotDoneLabel.getText() + " " + tempInt;
 		CountRepairNotesNotDoneLabel.setText(temp);
-		
+
 		tempInt = db.getCountNotes(id);
-		temp = CountNotesLabel.getText()+" "+tempInt;
+		temp = CountNotesLabel.getText() + " " + tempInt;
 		CountNotesLabel.setText(temp);
+		
+		File image1 = db.getIcon(id);
+		ImageView image11 = new ImageView("img/indeks.jpg");
+		if(image1 != null) {
+			String ss = "file:"+image1.getAbsolutePath();
+			Image img = new Image(ss);
+			image11 = new ImageView(img);
+		}
+		image11.setFitHeight(250.00);
+		image11.setFitWidth(250.00);
+		ImageButton.setGraphic(image11);
 	}
 	
+	public void setAvatarImage() {
+		FileChooser fileCh = new FileChooser();
+		ExtensionFilter filter = new ExtensionFilter("Obrazy","*.jpg", "*.jpeg", "*.png", "*.bmp");
+		fileCh.getExtensionFilters().addAll(filter);
+		File selectedFile = fileCh.showOpenDialog(null);
+		if( selectedFile != null) {
+			File imageFile;
+			imageFile = selectedFile;
+			db.saveAvatarImage(id, imageFile);
+			String ss = "file:"+imageFile.getAbsolutePath();
+			Image img = new Image(ss);
+			ImageView image11 = new ImageView(img);
+			image11.setFitHeight(250.00);
+			image11.setFitWidth(250.00);
+			ImageButton.setGraphic(image11);
+		}
+	}
+
 	public void changUserInfo() {
 		try {
 			db.close();
@@ -91,8 +128,7 @@ public class profileController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public void cencel() {
 		try {
 			db.close();
