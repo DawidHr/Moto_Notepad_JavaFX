@@ -1,19 +1,26 @@
 package application;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class LoginController implements Initializable{
@@ -24,11 +31,13 @@ public class LoginController implements Initializable{
 	public PasswordField userPassword;
 	DataBase db;
 	List<String> userNamesList;
-	
+	@FXML
+	ImageView LoginImage;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+		System.out.println("jestem w init");
 		db = new DataBase();
 		List<String> userNamesList = db.getUserNames();
 		ObservableList<String> listUsers = FXCollections.observableArrayList(userNamesList);
@@ -36,6 +45,20 @@ public class LoginController implements Initializable{
 	}
 	
 	
+	@FXML
+	public void comboBoxFunctionChangeImage() {
+	File imageFile = db.getIconByUserName(userName.getSelectionModel().getSelectedItem());
+		if(imageFile!=null) {
+		String ss = "file:"+imageFile.getAbsolutePath();
+		Image img = new Image(ss);
+		LoginImage.setImage(img);	
+	} 
+	else {
+		LoginImage.setPreserveRatio(false);
+		LoginImage.setImage(new Image("img/indeks.jpg", 200, 200, false, false));
+		
+	}
+	}
 	
 	public void loginToApp() {
 		if(db.isClose()) {

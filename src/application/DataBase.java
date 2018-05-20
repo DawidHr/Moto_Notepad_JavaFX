@@ -853,4 +853,24 @@ public class DataBase {
 		return null;
 	}
 	
+	public File getIconByUserName(String userName) {
+		try {
+			String query = "select image from User where user_name=?";
+			PreparedStatement prs = conn.prepareStatement(query);
+			prs.setString(1, userName);
+			ResultSet rs = prs.executeQuery();
+			File file = new File("avatar.jpg");
+			FileOutputStream fos = new FileOutputStream(file);
+			while(rs.next()) {
+				InputStream input = rs.getBinaryStream("image");
+				byte[] buffer = new byte[1024];
+				while (input.read(buffer) > 0) {
+					fos.write(buffer);
+				}
+				return file;
+			}
+		} catch(Exception e) {
+		}
+		return null;
+	}
 }
