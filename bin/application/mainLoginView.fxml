@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -33,7 +34,7 @@
             <Tooltip text="Podaj Hasło dla wybranego użytkownika" />
          </tooltip>
       </PasswordField>
-      <ComboBox fx:id="userName" prefWidth="200.0" promptText="Nazwa użytkownika" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <ComboBox fx:id="userName" onAction="#comboBoxFunctionChangeImage" prefWidth="200.0" promptText="Nazwa użytkownika" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets left="100.0" />
          </GridPane.margin>
@@ -41,10 +42,13 @@
             <Tooltip text="Wybierz swoją nazwe użytkonika" />
          </tooltip>
       </ComboBox>
-      <ImageView fx:id="LoginImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+      <ImageView fx:id="LoginImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" GridPane.columnIndex="1">
          <GridPane.margin>
-            <Insets left="150.0" />
+            <Insets left="100.0" />
          </GridPane.margin>
+         <image>
+            <Image url="@../img/icons8-account-100.png" />
+         </image>
       </ImageView>
       <Button maxWidth="200.0" minWidth="200.0" mnemonicParsing="false" onAction="#loginToApp" prefWidth="200.0" text="Zaloguj" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
